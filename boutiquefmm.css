@@ -1,0 +1,269 @@
+html,
+body {
+  font-size: 1rem;
+  margin: 0;
+  background: linear-gradient(
+          90deg,
+          rgb(176, 242, 182) 0%,
+          rgb(130, 196, 108) 100%
+  );
+}
+
+body p {
+  font-family: "Calibri";
+  font-size: 2rem;
+}
+
+#maincontainer {
+  height: calc(100vh - 70px);
+}
+
+.mainMain {
+  height: calc(100% - 70px - 119px);
+}
+
+/*font face (police)*/
+@font-face {
+  font-family: "hp";
+  src: url("hp.woff2") format("woff2"), url("hp.woff2") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*header*/
+header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  align-content: stretch;
+  background-image: url(background.jpg);
+  background-position: center;
+  background-size: 30%;
+  height: 200px;
+  position: sticky;
+  top: 1px;
+}
+
+h1 {
+  flex-grow: 2;
+  font-size: 6vw;
+  text-align: center;
+  font-family: "Calibri";
+
+}
+
+header a {
+  text-decoration: none;
+  color: black;
+}
+
+header img {
+  flex-grow: 1;
+  max-width: 400px;
+  max-height: 400px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+/*page accueil*/
+main {
+  display: flex;
+}
+
+.mainaccueil {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+  margin: auto;
+}
+
+.mainaccueil a {
+  text-decoration: none;
+}
+
+/* footer accueil*/
+footer {
+  background-image: url("background.jpg");
+  background-position: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  font-family: "Calibri";
+  font-size: 1em;
+  font-weight: bold;
+  height: 210px;
+  background-size: 30%;
+}
+
+/*MAIN BODY*/
+/*main*/
+.maincv {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+          90deg,
+          rgb(176, 242, 182) 0%,
+          rgb(130, 196, 108) 100%
+  );
+}
+
+/*titre*/
+.titre {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  background: rgb(1, 215, 88);
+  background: linear-gradient(
+          90deg,
+          rgba(176, 242, 182) 0%,
+          rgba(130, 196, 108) 100%
+  );
+  border-radius: 20px;
+  margin: 5px 150px;
+}
+
+#phototitre {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  margin: 5px;
+}
+
+embed {
+  border-radius: 20px;
+}
+
+/*nav*/
+nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 150px;
+  position: sticky;
+  top: 135px;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  background: rgb(1, 215, 88);
+  border-radius: 20px;
+}
+
+nav li {
+  margin: 0 70px;
+}
+
+nav a {
+  color: black;
+  margin: 5px;
+  text-decoration: none;
+}
+
+/*info*/
+.info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+  text-align: center;
+  border-radius: 20px;
+  margin: 5px 150px;
+  background: rgba(1, 215, 88);
+  background: linear-gradient(
+          90deg,
+          rgba(176, 242, 182) 0%,
+          rgba(130, 196, 108) 100%
+  );
+  font-size: 25px;
+}
+
+.info p {
+  margin: 20px;
+  font-weight: bold;
+}
+
+.info a {
+  color: black;
+}
+
+.exp ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+
+nav,
+h2,
+h3 {
+  text-align: center;
+  font-family: "Calibri";
+  font-size: 400%;
+  margin: 10px 150px;
+}
+
+/*page contact*/
+#form1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: space-around;
+}
+
+.com {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.com input[type="submit"] {
+  font-size: 0.8em;
+  width: 10em;
+  height: 5em;
+  border-radius: 1em;
+}
+
+textarea {
+  background: linear-gradient(
+          90deg,
+          rgba(176, 242, 182) 0%,
+          rgba(130, 196, 108) 100%
+  );
+  width: 400px;
+  height: 200px;
+  font-size: 36px;
+}

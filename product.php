@@ -1,10 +1,19 @@
 <?php
 
+include 'functions.php';
+
 $titre = 'Produit';
 
 $nompage = $_GET['page'];
 
 $showproducts = indexProducts($bdd);
+
+
+foreach ($showproducts as $showproduct) {
+    echo $showproduct['name'];
+    echo $showproduct['description'];
+}
+
 
 ?>
 
@@ -25,14 +34,6 @@ $showproducts = indexProducts($bdd);
     <title> <?php echo $titre ?> </title>
 
 </head>
-
-<?php
-
-foreach ($showproducts as $showproduct) {
-    echo $showproduct['name'];
-}
-
-?>
 
 <header class="bg-warning">
     <div class="container">
