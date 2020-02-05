@@ -7,9 +7,27 @@ function debug($var)
     highlight_string("<?php\n\n" . var_export($var, true) . ";\n?>");
 }
 
-function newProducts(PDO $mabdd)
+/** FONCTION indexProducts qui affiche l'ensemble des produits sur l'index avec la marque, le nom, la description et le prix
+ * @param PDO $ma_bdd
+ * @return array
+ */
+function indexProducts(PDO $ma_bdd): array
 {
-    $query = $mabdd->query('SELECT id, name, description, price FROM products ORDER BY arrivale_date DESC LIMIT 6');
-    $response = $query->fetchAll(PDO::FETCH_ASSOC);
-    return $response;
+    $query = $ma_bdd->query('SELECT id, brand, name, description, price FROM products ORDER BY arrival_date');
+    $reponse = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $reponse;
 }
+
+
+/** FONCTION viewProduct qui affiche un produit en fonction de son id
+ * @param PDO $ma_bdd
+ * @param int $id_product
+ * @return array
+ */
+function viewProduct(PDO $ma_bdd, int $id_product): array
+{
+    $query = $ma_bdd->query('SELECT id, brand, name, description, SUM(price+(price*taxe)/100) AS taxe_price FROM products WHERE id =' . $id_product);
+    $reponse = $query->fetch(PDO::FETCH_ASSOC);
+    return $reponse;
+}
+
