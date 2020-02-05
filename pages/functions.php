@@ -14,8 +14,8 @@ function debug($var)
 function indexProducts(PDO $ma_bdd): array
 {
     $query = $ma_bdd->query('SELECT id, brand, name, description, price FROM products ORDER BY arrival_date');
-    $reponse = $query->fetchAll(PDO::FETCH_ASSOC);
-    return $reponse;
+    $response_indexProducts = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $response_indexProducts;
 }
 
 
@@ -27,7 +27,7 @@ function indexProducts(PDO $ma_bdd): array
 function viewProduct(PDO $ma_bdd, int $id_product): array
 {
     $query = $ma_bdd->query('SELECT id, brand, name, description, SUM(price+(price*taxe)/100) AS taxe_price FROM products WHERE id =' . $id_product);
-    $reponse = $query->fetch(PDO::FETCH_ASSOC);
-    return $reponse;
+    $response_viewProduct = $query->fetch(PDO::FETCH_ASSOC);
+    return $response_viewProduct;
 }
 

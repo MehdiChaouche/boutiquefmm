@@ -1,27 +1,26 @@
 <?php
-include 'config.php';
-include 'functions.php';
-include 'header.php';
-$new_products = indexProducts($bdd);
-//debug($new_products);
-?>
+/* ------ Logique -----*/
+if (isset($_GET['pages'])) {
+    $page = $_GET['pages'];
+    if ($page == 'home') {
+        $url_page = 'home';
+ } elseif ($page == 'product') {
+        $url_page = 'product-id';
+ /*   } elseif ($page == 'products') {
+        $url_page = 'products';
+    } elseif ($page == 'cv_generique') {
+        $url_page = 'cv_generique';
+    } elseif ($page == 'contact') {
+        $url_page = 'contact';*/
+    } else {
+        $url_page = '404';
+    }
+} else {
+    $url_page = 'home';
+}
 
-
-<h1>Asimov Robotics</h1>
-
-<hr>
-NAVBAR
-<hr>
-
-
-<?php foreach ($new_products as $new_product): ?>
-
-    <img src="images/<?= $new_product['id'] ?>.jpg" alt="..." width="10%">
-    <a href="product.php?id=<?=$new_product['id']?>"><h2><?=$new_product['brand'] .' - '. $new_product['name'] ?></h2></a>
-    <p><?= $new_product['description'] ?></p>
-<hr>
-<?php endforeach; ?>
-
-
-
-
+/* ------ fin logique -----*/
+/* ------ Début execution -----*/
+include 'pages/' . $url_page . '.php';
+//include 'layout.php';
+/* ------ Fin execution -----*/
