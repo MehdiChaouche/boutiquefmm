@@ -14,7 +14,7 @@ if (isset($route[$nompage])) {
 if (isset($_GET['page'])) {
     $nompage = $_GET['page'];
     if ($nompage == "accueil") {
-        $nomdufichier = "./pagesprincipales/home.php";
+        $nomdufichier = "./pages/home.php";
     } else {
         echo "Erreur 404 !";
     }
