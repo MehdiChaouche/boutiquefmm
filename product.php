@@ -1,10 +1,19 @@
 <?php
 
+include 'functions.php';
+
 $titre = 'Produit';
 
 $nompage = $_GET['page'];
 
 $showproducts = indexProducts($bdd);
+
+
+foreach ($showproducts as $showproduct) {
+    echo $showproduct['name'];
+    echo $showproduct['description'];
+}
+
 
 ?>
 
