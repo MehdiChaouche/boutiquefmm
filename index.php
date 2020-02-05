@@ -4,11 +4,11 @@ if (isset($_GET['page'])) {
 } else {
     $nompage = 'accueil';
 }
-$route = ['accueil' => './pagesprincipales/home.php', '404' => './pagesprincipales/404.php'];
+$route = ['accueil' => './pages/home.php', '404' => './pages/404.php'];
 if (isset($route[$nompage])) {
     $nomdufichier = $route[$nompage];
 } else {
-    $nomdufichier = "./pagesprincipales/404.php";
+    $nomdufichier = "./pages/404.php";
 }
 /* ----- Début logigramme ---- */
 if (isset($_GET['page'])) {
@@ -19,7 +19,7 @@ if (isset($_GET['page'])) {
         echo "Erreur 404 !";
     }
 } else {
-    $nomdufichier = "./pagesprincipales/home.php";
+    $nomdufichier = "./pages/home.php";
 }
 /*----- Fin logigramme ---- */
 include 'config.php';
