@@ -1,10 +1,18 @@
 <?php
+session_start();
+
 include 'pages/config.php';
 include 'pages/functions.php';
 include 'pages/header.php';
 $new_products = indexProducts($bdd);
 //debug($new_products);
 ?>
+
+<h2>Votre panier :</h2>
+
+<?= $_SESSION['cart']['id_product'] ?> </br>
+<?= $_SESSION['cart']['quantity'] ?>
+
 
 <div class="container row mt-4 mx-auto">
     <div class="card-columns">
@@ -16,7 +24,7 @@ $new_products = indexProducts($bdd);
                 </div>
                 <div class="card-body text-center">
                     <h3 class="card-title pricing-card-title text-center"><?= $new_product['price'] ?> € </h3>
-                    <a class="btn btn-secondary" href="pages/product.php?id=<?= $new_product['id'] ?>" role="button">Voir le
+                    <a class="btn btn-secondary" href="index.php?page=product&id=<?= $new_product['id'] ?>" role="button">Voir le
                         détail du produit</a>
                 </div>
             </div>

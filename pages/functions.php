@@ -31,3 +31,30 @@ function viewProduct(PDO $ma_bdd, int $id_product): array
     return $response_viewProduct;
 }
 
+//Fonction pour créer un panier -> création du tableau $_SESSION avec en paramètres id_product & quantity
+/**
+ * @param $id_product
+ * @param $quantity
+ * @return mixed
+ */
+function createCart()
+{
+
+    $_SESSION['cart'] = array();
+    return $_SESSION;
+}
+
+//Fonction ajout de produit avec en paramètres id_product & quantity
+function addProduct($id_product, $quantity)
+{
+    $_SESSION['cart'][$id_product] = $quantity;
+    if (!isset($_SESSION['cart'][$id_product])) {
+        $_SESSION['cart'][$id_product] = $quantity;
+    } else {
+        $_SESSION['cart'][$id_product]= $_SESSION['cart'][$id_product] + $quantity  ;
+    }
+    return $_SESSION;
+}
+
+
+
