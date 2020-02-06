@@ -22,7 +22,7 @@ function indexProducts(PDO $ma_bdd): array
 /** FONCTION viewProduct qui affiche un produit en fonction de son id
  * @param PDO $ma_bdd
  * @param int $id_product
- * @return array
+ * @return array;
  */
 function viewProduct(PDO $ma_bdd, int $id_product): array
 {
@@ -31,3 +31,19 @@ function viewProduct(PDO $ma_bdd, int $id_product): array
     return $response_viewProduct;
 }
 
+function cartCreate() // On vérifie si le panier existe ou non
+{
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+    return true;
+}
+
+function cartAdd($id_product, $productquantity)
+{
+    if (isset($_SESSION['cart'][$id_product])) {
+        $_SESSION['cart'][$id_product] += $productquantity;
+    } else {
+        $_SESSION['cart'][$id_product] = 1;
+    }
+}
