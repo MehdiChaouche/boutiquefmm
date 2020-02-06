@@ -13,9 +13,17 @@ function debug($var)
  */
 function indexProducts(PDO $ma_bdd): array
 {
-    $query = $ma_bdd->query('SELECT id, brand, name, description, price FROM products ORDER BY arrival_date');
+    $query = $ma_bdd->query('SELECT id, brand, name, description, price, taxe FROM products ORDER BY arrival_date LIMIT 6');
     $response_indexProducts = $query->fetchAll(PDO::FETCH_ASSOC);
     return $response_indexProducts;
+}
+
+
+function allProducts(PDO $ma_bdd): array
+{
+    $query = $ma_bdd->query('SELECT id, brand, name, description, price, taxe FROM products ORDER BY brand');
+    $response_allProducts = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $response_allProducts;
 }
 
 
@@ -26,12 +34,24 @@ function indexProducts(PDO $ma_bdd): array
  */
 function viewProduct(PDO $ma_bdd, int $id_product): array
 {
-    $query = $ma_bdd->query('SELECT id, brand, name, description, SUM(price+(price*taxe)/100) AS taxe_price FROM products WHERE id =' . $id_product);
+    $query = $ma_bdd->query('SELECT id, brand, name, description, SUM(price+(price*taxe)/100) AS taxe_price, stock FROM products WHERE id =' . $id_product);
     $response_viewProduct = $query->fetch(PDO::FETCH_ASSOC);
     return $response_viewProduct;
 }
 
-//Fonction pour créer un panier -> création du tableau $_SESSION avec en paramètres id_product & quantity
+/** FONCTION viewProduct qui affiche un produit en fonction de son id
+ * @param PDO $ma_bdd
+ * @param int $id_product
+ * @return array
+ */
+function viewCartProducts(PDO $ma_bdd, int $id_product): array
+{
+    $query = $ma_bdd->query('SELECT id, brand, name, description, SUM(price+(price*taxe)/100) AS taxe_price FROM products WHERE id =' . $id_product);
+    $response_viewProduct = $query->fetchALL(PDO::FETCH_ASSOC);
+    return $response_viewProduct;
+}
+
+//Fonction pour créer un panier vide -> création du tableau $_SESSION['car']
 /**
  * @param $id_product
  * @param $quantity
@@ -45,16 +65,24 @@ function createCart()
 }
 
 //Fonction ajout de produit avec en paramètres id_product & quantity
-function addProduct($id_product, $quantity)
+function addProduct($id_product)
 {
-    $_SESSION['cart'][$id_product] = $quantity;
     if (!isset($_SESSION['cart'][$id_product])) {
-        $_SESSION['cart'][$id_product] = $quantity;
+        $_SESSION['cart'][$id_product] = 1 ;
     } else {
-        $_SESSION['cart'][$id_product]= $_SESSION['cart'][$id_product] + $quantity  ;
+        $_SESSION['cart'][$id_product]= $_SESSION['cart'][$id_product] + 1  ;
     }
     return $_SESSION;
 }
+
+//Fonction ajout de produit avec en paramètres id_product & quantity
+function getStock(PDO $ma_bdd, $id_product)
+{
+    $query = $ma_bdd->query('SELECT id, stock FROM products WHERE id =' . $id_product);
+    $response_getStock = $query->fetch(PDO::FETCH_ASSOC);
+    return $response_getStock;
+}
+
 
 
 

@@ -6,5 +6,5 @@ error_reporting(E_ALL);
 try {
     $bdd = new PDO('mysql:host=localhost;dbname=boutiquefmm;charset=utf8', 'matthieu', 'rootmatt');
 } catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
+    die('Erreur : impossible de se connecter à la base de données' . $e->getMessage());
 }
