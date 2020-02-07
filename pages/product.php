@@ -16,17 +16,11 @@ if (!isset($_SESSION['cart'])) {
 }
 
 if (isset($_POST['add_cart'])) {
-    $add_cart = addProduct($id_product_get);
+    $add_cart = addProduct($id_product_get, intval($_POST['cart_quantity']));
+    header('Location: index.php?page=cart', true, 302);
 }
 //debug($_SESSION['cart']);
 ?>
-
-
-<?php /*if (isset($add_product)): */ ?><!--
-    Id produit : <? /*= $add_product['cart']['id_product'] */ ?> </br>
-    Prix : <? /*= number_format($add_product['cart']['price'], 2, ',', ' ') */ ?>
-
---><?php /*endif; */ ?>
 
 <div class="card mt-3 mx-auto col-md-8 shadow">
     <div class="row no-gutters">
@@ -42,9 +36,9 @@ if (isset($_POST['add_cart'])) {
                 <p class="card-text text-justify"><?= $view_products['description'] ?></p>
                 <p class="text-right">Il reste <?= $view_products['stock'] ?> produits en stock.</p>
                 <form method="post">
+                <div>Quantité : <input type="text" name="cart_quantity" value=""></div>
                     <button class="btn btn-secondary m-3" type="submit" name="add_cart">Ajouter au panier</button>
                 </form>
-<!--                <a class="btn btn-secondary" href="index.php?page=addcart&id=--><?//= $id_product_get?><!--" role="button">Ajouter au panier</a>-->
             </div>
         </div>
     </div>

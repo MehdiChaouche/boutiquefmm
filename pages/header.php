@@ -32,6 +32,7 @@
 
 <h1>Asimov Robotics</h1>
 
+<?php include 'addcart.php' ?>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -48,12 +49,10 @@
                 <a class="nav-link text-white" href="../index.php?page=products"> Catalogue <span
                             class="sr-only"></span></a>
             </li>
-            <li class="nav-item my-2 my-sm-0 ">
-                <?php include 'addcart.php' ?>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="../index.php?page=cart"> Détail du panier <span
+                            class="sr-only"></span></a>
             </li>
-    </div>
-    </li>
-    </ul>
-
+        </ul>
     </div>
 </nav>

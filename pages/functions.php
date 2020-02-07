@@ -65,12 +65,21 @@ function createCart()
 }
 
 //Fonction ajout de produit avec en paramètres id_product & quantity
-function addProduct($id_product)
+function addProduct($id_product, $product_quantity)
 {
     if (!isset($_SESSION['cart'][$id_product])) {
-        $_SESSION['cart'][$id_product] = 1 ;
+        $_SESSION['cart'][$id_product] = $product_quantity;
     } else {
-        $_SESSION['cart'][$id_product]= $_SESSION['cart'][$id_product] + 1  ;
+        $_SESSION['cart'][$id_product] = $_SESSION['cart'][$id_product] + $product_quantity;
+    }
+    return $_SESSION;
+}
+
+//Fonction changeProduct() changement de produit avec en paramètre id_prodcut et quantity
+function changeProduct($id_product, $new_product_quantity)
+{
+    if (isset($_SESSION['cart'][$id_product])) {
+        $_SESSION['cart'][$id_product] = $new_product_quantity;
     }
     return $_SESSION;
 }
