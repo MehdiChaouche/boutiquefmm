@@ -32,7 +32,7 @@
 
 <h1>Asimov Robotics</h1>
 
-<?php include 'addcart.php' ?>
+
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
