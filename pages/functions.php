@@ -33,17 +33,22 @@ function viewProduct(PDO $ma_bdd, int $id_product): array
 
 function cartCreate() // On vérifie si le panier existe ou non
 {
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
-    return true;
+    $_SESSION['cart'] = array();
 }
 
-function cartAdd($id_product, $productquantity)
+function cartAdd($id_product)
 {
-    if (isset($_SESSION['cart'][$id_product])) {
-        $_SESSION['cart'][$id_product] += $productquantity;
-    } else {
+    if (!isset($_SESSION['cart'][$id_product])) {
         $_SESSION['cart'][$id_product] = 1;
+    } else {
+        $_SESSION['cart'][$id_product] = $_SESSION['cart'][$id_product] + 1;
+    }
+    return $_SESSION;
+}
+
+function cartMod($quantity)
+{
+    if (isset($_POST['cart_quantity'])) {
+        $quantity = $_POST['cart_quantity'];
     }
 }

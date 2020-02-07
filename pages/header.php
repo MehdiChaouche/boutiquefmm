@@ -1,5 +1,4 @@
 <?php
-
 ?>
 
 <!doctype html>
@@ -21,7 +20,6 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <h1>Asimov Robotics</h1>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08"
                 aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
