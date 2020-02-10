@@ -21,6 +21,7 @@ if (isset($_POST['addcart'])) {
     $cart_Add = cartAdd($id_product);
 }
 
+
 if (isset($_POST['reset'])) {
     session_destroy();
 }
@@ -35,7 +36,13 @@ if (isset($_POST['reset'])) {
         <br>
     <?php endforeach; ?>
     <span class="badge badge-light"><?php echo $total_products; ?> article(s)<br></span>
-    <h6><a href="index.php?page=cart" class="badge badge-warning">Prix total : <?= number_format($total_price, 2, ',', ' ') ?> € TTC </a>
+    <?php if ($total_products > 0) {
+        $cartlink = 'index.php?page=cart';
+    } else {
+        $cartlink = 'index.php?page=emptycart';
+    } ?>
+    <h6><a href="<?php echo $cartlink ?>" class="badge badge-warning">Prix total
+            : <?= number_format($total_price, 2, ',', ' ') ?> € TTC </a>
     </h6>
 </div>
 <div class="card mt-3 mx-auto col-md-8 shadow">

@@ -14,6 +14,10 @@ if (isset($_GET['page'])) {
                $url_page = 'contact';*/
     } elseif ($page == 'cart') {
         $url_page = 'cart';
+    } elseif ($page == 'emptycart') {
+        $url_page = 'emptycart';
+    } elseif ($page == 'command') {
+        $url_page = 'command';
     } else {
         $url_page = '404';
     }

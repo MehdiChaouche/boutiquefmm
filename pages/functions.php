@@ -26,7 +26,7 @@ function indexProducts(PDO $ma_bdd): array
  */
 function viewProduct(PDO $ma_bdd, int $id_product): array
 {
-    $query = $ma_bdd->query('SELECT id, brand, name, description, SUM(price+(price*taxe)/100) AS taxe_price FROM products WHERE id =' . $id_product);
+    $query = $ma_bdd->query('SELECT id, brand, name, description, weight, stock, SUM(price+(price*taxe)/100) AS taxe_price FROM products WHERE id =' . $id_product);
     $response_viewProduct = $query->fetch(PDO::FETCH_ASSOC);
     return $response_viewProduct;
 }
@@ -36,7 +36,7 @@ function cartCreate() // On vérifie si le panier existe ou non
     $_SESSION['cart'] = array();
 }
 
-function cartAdd($id_product)
+function cartAdd(int $id_product) // Puis on y ajoute le(s) produit(s)
 {
     if (!isset($_SESSION['cart'][$id_product])) {
         $_SESSION['cart'][$id_product] = 1;
@@ -46,9 +46,42 @@ function cartAdd($id_product)
     return $_SESSION;
 }
 
-function cartMod($quantity)
+function cartMod(int $id_product, int $new_product_quantity) // Fonction permettant de modifier le panier
 {
-    if (isset($_POST['cart_quantity'])) {
-        $quantity = $_POST['cart_quantity'];
+    if (isset($_SESSION['cart'][$id_product])) {
+        $_SESSION['cart'][$id_product] = $new_product_quantity;
     }
+    if ($_SESSION['cart'][$id_product] <= 0) {
+        unset($_SESSION['cart'][$id_product]);
+        echo "Votre panier est vide.";
+    }
+    return $_SESSION;
+}
+
+function cartDel(int $id_product) // Fonction permettant de supprimer un article du panier
+{
+    unset($_SESSION['cart'][$id_product]);
+    return $_SESSION;
+}
+
+function cartOrderValidate(PDO $ma_bdd) // On crée la commande (date de création uniquement)
+{
+    $ma_bdd->query('INSERT INTO orders (created_at, delivered_at) VALUE (NOW(), NOW())');
+}
+
+function cartOrderLineValidate(PDO $ma_bdd, int $id_product, int $quantity, int $lastorderID) // On crée la ligne de commande
+{
+    $products = viewProduct($ma_bdd, $id_product);
+    $sth = $ma_bdd->prepare('INSERT INTO order_lines (brand_name, products_name, price, quantity, weight, tva, orders_id) 
+    VALUES (:brand, :name, :price, :quantity, :weight, :tva, :lastorderid)
+    ');
+    $sth->bindParam(':brand', $products['brand']);
+    $sth->bindParam(':name', $products['name']);
+    $sth->bindParam(':price', $products['price']);
+    $sth->bindParam(':quantity', $quantity);
+    $sth->bindParam(':weight', $products['weight']);
+    $sth->bindParam(':tva', $products['taxe']);
+    $sth->bindParam(':lastorderid', $lastorderID);
+    $sth->execute();
+    return $sth;
 }

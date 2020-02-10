@@ -27,11 +27,6 @@ $new_products = indexProducts($bdd);
                     </div>
                 </div>
             <?php endforeach; ?>
-            <div class="card shadow">
-                <div class="card-body text-center">
-                    <a class="btn btn-secondary" href="pages/test1.php" role="button">Lien vers test1.php</a>
-                </div>
-            </div>
         </div>
     </div>
 
