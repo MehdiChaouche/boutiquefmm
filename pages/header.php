@@ -30,10 +30,12 @@
             crossorigin="anonymous"></script>
 </head>
 
-<h1>Asimov Robotics</h1>
-
-
-
+<div class="jumbotron jumbotron-fluid mb-0">
+    <div class="container">
+        <h1 class="display-4">Asimov Robotics</h1>
+        <p class="lead"></p>
+    </div>
+</div>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08"
@@ -46,12 +48,11 @@
                 <a class="nav-link text-white" href="../index.php?page=home"> Accueil <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="../index.php?page=products"> Catalogue <span
+                <a class="nav-link text-white out" href="../index.php?page=products"> Catalogue <span
                             class="sr-only"></span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="../index.php?page=cart"> Détail du panier <span
-                            class="sr-only"></span></a>
+            <li class="nav-item dropright">
+                <?php include 'addcart.php'; ?>
             </li>
         </ul>
     </div>

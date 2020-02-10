@@ -53,13 +53,10 @@ function viewCartProducts(PDO $ma_bdd, int $id_product): array
 
 //Fonction pour créer un panier vide -> création du tableau $_SESSION['car']
 /**
- * @param $id_product
- * @param $quantity
  * @return mixed
  */
 function createCart()
 {
-
     $_SESSION['cart'] = array();
     return $_SESSION;
 }
@@ -81,7 +78,16 @@ function changeProduct($id_product, $new_product_quantity)
     if (isset($_SESSION['cart'][$id_product])) {
         $_SESSION['cart'][$id_product] = $new_product_quantity;
     }
+    if ($_SESSION['cart'][$id_product] == 0) {
+        unset($_SESSION['cart'][$id_product]);
+    }
     return $_SESSION;
+}
+
+//Fonction de suppression du panier !!!
+function deleteCart()
+{
+    unset($_SESSION['cart']);
 }
 
 //Fonction ajout de produit avec en paramètres id_product & quantity
