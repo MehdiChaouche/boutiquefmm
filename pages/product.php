@@ -18,6 +18,7 @@ if (!isset($_SESSION['cart'])) {
 if (isset($_POST['add_cart'])) {
     $add_cart = addProduct($id_product_get, intval($_POST['cart_quantity']));
     header('Location: index.php?page=cart', true, 302);
+    exit;
 }
 //debug($_SESSION['cart']);
 ?>

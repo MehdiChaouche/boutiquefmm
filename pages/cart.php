@@ -17,17 +17,40 @@ $total_product = 0;
 $total_products = 0;
 $product_number = 0;
 
+
 if (isset($_POST['modify_cart'])) {
     foreach ($_POST['item'] as $key => $value) {
         changeProduct($key, $value);
     }
 }
 
+if (isset($_POST['delete_product'])) {
+    foreach ($_POST['delete_product'] as $key => $value) {
+        deleteProduct($key);
+    }
+}
+
 if (isset($_POST['delete_cart'])) {
     deleteCart();
 }
+//debug($_POST['delete_product']);
 
-//debug($_SESSION);
+if (isset($_POST['validate_cart'])) {
+    // Vérifier le stock
+    // Creer la commande
+    $order = createOrder($bdd);
+    if (isset($order)) {
+        $id_order = $bdd->lastInsertId();
+        foreach ($_SESSION['cart'] as $idproduct => $quantity) {
+            $order_lines = createOrderLines($bdd, $id_order, $idproduct, $quantity);
+            debug($order_lines);
+        }
+//      header('Location: index.php?page=order', true, 302);
+//      exit;
+//    }
+    }
+}
+
 ?>
 
 <div class="container mx-auto ">
@@ -39,6 +62,7 @@ if (isset($_POST['delete_cart'])) {
                     <th scope="col"></th>
                     <th scope="col">Produit</th>
                     <th scope="col">Quantité</th>
+                    <th scope="col">Prix Unitaire (TTC)</th>
                     <th scope="col">Total (TTC)</th>
                     <th scope="col"></th>
                 </tr>
@@ -47,10 +71,13 @@ if (isset($_POST['delete_cart'])) {
                 <?php foreach ($_SESSION['cart'] as $id_product => $quantity): ?>
                     <?php $products = viewProduct($bdd, $id_product) ?>
                     <tr>
-                        <td> <img src="images/<?= $products['id'] ?>.jpg" alt="Photo non disponible" width="50px"></td>
+                        <td><img src="images/<?= $products['id'] ?>.jpg" alt="Photo non disponible" width="50px"></td>
                         <td scope="row"><?= $products['brand'] . ' - ' . $products['name'] ?></td>
                         <td>
                             <input type="text" name="item[<?= $id_product ?>]" value="<?= $quantity ?>">
+                        </td>
+                        <td>
+                            <?= number_format($products['taxe_price'], 2, ',', '') ?> €
                         </td>
                         <td>
                             Total :
@@ -58,7 +85,7 @@ if (isset($_POST['delete_cart'])) {
                             <?= number_format($total_product, 2, ',', ' ') ?> €
                         </td>
                         <td>
-                            <button class="btn btn-danger" type="submit" name="delete_product">X
+                            <button class="btn btn-danger" type="submit" name="delete_product[<?= $id_product ?>]">X
                             </button>
                         </td>
                     </tr>
@@ -72,9 +99,9 @@ if (isset($_POST['delete_cart'])) {
                     : <?= $total_products . ' articles pour un total de ' . number_format($sum_taxe_price, 2, ',', ' ') ?>
                     €
                     TTC</h6></strong>
-
-            <button class="btn btn-secondary m-3" type="submit" name="modify_cart">Modifer le panier</button>
-            <button class="btn btn-secondary m-3" type="submit" name="delete_cart">Supprimer le panier</button>
+            <button class="btn btn-success m-3" type="submit" name="validate_cart">Valider le panier</button>
+            <button class="btn btn-primary m-3" type="submit" name="modify_cart">Modifer le panier</button>
+            <button class="btn btn-danger m-3" type="submit" name="delete_cart">Supprimer le panier</button>
         </form>
     </div>
 </div>

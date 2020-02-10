@@ -12,6 +12,8 @@ if (isset($_GET['page'])) {
         $url_page = 'products';
     } elseif ($page == 'cart') {
         $url_page = 'cart';
+    } elseif ($page == 'order') {
+        $url_page = 'order';
     } else {
         $url_page = '404';
     }

@@ -2,6 +2,9 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+if (!isset($_SESSION['cart'])) {
+    createCart();
+}
 $carts = $_SESSION['cart'];
 $sum_taxe_price = 0;
 ?>
@@ -16,8 +19,8 @@ $sum_taxe_price = 0;
         <a class="dropdown-item"><p>
                 <?php $products = viewProduct($bdd, $cart) ?>
                 <img src="images/<?= $products['id'] ?>.jpg" alt="Photo non disponible" width="50px">
-                - <?= $quantity ?>
-                <strong>x</strong> <?= $products['brand'] . ' - ' . $products['name'] . ' à ' . number_format($products['taxe_price'], 2, ',', ' ') ?>
+                <?= $products['brand'] . ' - ' . $products['name'] . ' - ' . $quantity . '
+                <strong>x</strong> ' . number_format($products['taxe_price'], 2, ',', ' ') ?>
                 €
             </p>
             <?php $sum_taxe_price += $products['taxe_price'] ?>
