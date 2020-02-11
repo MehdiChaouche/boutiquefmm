@@ -4,6 +4,8 @@ if (isset($_GET['page'])) {
     $page = $_GET['page'];
     if ($page == 'home') {
         $url_page = 'home';
+    } elseif ($page == 'login') {
+        $url_page = 'login';
     } elseif ($page == 'product') {
         $url_page = 'product';
     } elseif ($page == 'addcart') {

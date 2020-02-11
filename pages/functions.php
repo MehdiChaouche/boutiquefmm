@@ -175,7 +175,7 @@ function updateStock(PDO $ma_bdd, $id_product, $quantity)
 
 function viewOrder(PDO $ma_bdd, $id_order)
 {
-    $query = $ma_bdd->query('SELECT brand_name, product_name, price, taxe, weight, quantity FROM order_lines WHERE orders_id='. $id_order);
+    $query = $ma_bdd->query('SELECT brand_name, product_name, price, taxe, weight, quantity FROM order_lines WHERE orders_id=' . $id_order);
     $response_viewOrder = $query->fetchALL(PDO::FETCH_ASSOC);
     return $response_viewOrder;
 }
@@ -200,6 +200,32 @@ function getStocks(PDO $ma_bdd, $id_product)
     return $response_getStocks;
 }
 
+//Fonction pour récuperer champ "admin" dans la BDD
+//function getAdmin(PDO $ma_bdd)
+//{
+//    $query=$ma_bdd->query('SELECT * FROM customers');
+//    return
+//}
 
+//Fonction pour aller chercher les infos utilisateurs dans la table "customers"
+function getUser(PDO $ma_bdd)
+{
+    $query = $ma_bdd->query('SELECT mail, password, admin FROM customers');
+    return $query;
+}
 
-
+//Fonction signIn pour se connecter en vérifiant les informations utilisateurs $mail === email et $password === password
+function signIn(PDO $ma_bdd, $signin_email, $signin_password)
+{
+    $usersid = getUser($ma_bdd); //récupération des informations utilisateurs
+    foreach ($usersid as $userid) {
+        if ($userid['mail'] === $signin_email && $userid['password'] === $signin_password) {
+            if (!isset($_SESSION['user'])) {
+                $_SESSION['user']['email'] = $userid['mail'];
+                $_SESSION['user']['admin'] = $userid['admin'];
+            } else {
+                echo "Vous n'êtes pas un utilisateur enregistré";
+            }
+        }
+    }
+}
