@@ -37,19 +37,23 @@ if (isset($_POST['delete_cart'])) {
 
 if (isset($_POST['validate_cart'])) {
     // Vérifier le stock
-    // Creer la commande
-    $order = createOrder($bdd);
-    if (isset($order)) {
+    foreach ($_SESSION['cart'] as $id_product => $quantity) {
+        $products = viewProduct($bdd, $id_product);
+    }
+    if ($products['stock'] >= $quantity) {   // Si le stock est supérieur à la quantité de la commande -> Creer la commande
+        $order = createOrder($bdd);
         $id_order = $bdd->lastInsertId();
         foreach ($_SESSION['cart'] as $idproduct => $quantity) {
             $order_lines = createOrderLines($bdd, $id_order, $idproduct, $quantity);
-            debug($order_lines);
+            updateStock($bdd, $idproduct, $quantity);
         }
-//      header('Location: index.php?page=order', true, 302);
-//      exit;
-//    }
+        header('Location: index.php?page=order&id='.$id_order, true, 302);
+        exit;
+    } else {
+        echo "Le stock est insuffisant pour la commande";
     }
 }
+
 
 ?>
 

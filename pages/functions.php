@@ -134,34 +134,50 @@ function createOrder(PDO $ma_bdd)
     return $query;
 }
 
-//Fonction d'insertion des lignes de commande dans la commande
+//fonction reprise des infos de commande pour chaque produit pour la créatio nde ligne de commandes
+function viewProductOrder(PDO $ma_bdd, int $id_product): array
+{
+    $query = $ma_bdd->query('SELECT id, brand, name, description, price, weight FROM products WHERE id =' . $id_product);
+    $response_viewProduct = $query->fetch(PDO::FETCH_ASSOC);
+    return $response_viewProduct;
+}
 
-/**
- * @param PDO $ma_bdd
- * @param $id_order
- * @param $id_product
- * @param $quantity
- * @return bool
- */
-function createOrderLines(PDO $ma_bdd, $id_order, $id_product, $quantity)
+//Fonction d'insertion des lignes de commande dans la commande
+function createOrderLines(PDO $ma_bdd, $id_order, $product_id, $quantity)
 {
     //Reprendre les informations de la table produit
-    $product = viewCartProducts($ma_bdd, $id_product);
+    $product = viewProductOrder($ma_bdd, $product_id);
     // creer la ligne
-    $query = $ma_bdd->prepare('INSERT INTO order_lines (brand_name, product_name, price, taxe, weight, quantity, order_id, product_id)
-    VALUES (:brand_name, :product_name, :price, :taxe, :weight, :quantity, :id_order, :id_product)');
+    $query = $ma_bdd->prepare('INSERT INTO order_lines (brand_name, product_name, price, taxe, weight, quantity, orders_id, products_id)
+    VALUES (:brand_name, :product_name, :price, :taxe, :weight, :quantity, :orders_id, :products_id)');
     $query->bindParam(':brand_name', $product['brand'], PDO::PARAM_STR);
     $query->bindParam(':product_name', $product['name'], PDO::PARAM_STR);
     $query->bindParam(':price', $product['price'], PDO::PARAM_STR);
     $query->bindParam(':taxe', $product['taxe'], PDO::PARAM_STR);
     $query->bindParam(':weight', $product['weight'], PDO::PARAM_STR);
     $query->bindParam(':quantity', $quantity, PDO::PARAM_INT);
-    $query->bindParam(':id_order', $id_order, PDO::PARAM_INT);
-    $query->bindParam(':id_product', $id_product, PDO::PARAM_INT);
+    $query->bindParam(':orders_id', $id_order, PDO::PARAM_INT);
+    $query->bindParam(':products_id', $product_id, PDO::PARAM_INT);
     $state = $query->execute();
-
-    // Decrementer stock
     return $state;
+}
+
+// Fonction pour décrémenter stock
+/**
+ * @param PDO $ma_bdd
+ * @param $id_product
+ * @param $quantity
+ */
+function updateStock(PDO $ma_bdd, $id_product, $quantity)
+{
+    $ma_bdd->query('UPDATE products SET stock = stock -' . $quantity . ' WHERE products.id =' . $id_product);
+}
+
+function viewOrder(PDO $ma_bdd, $id_order)
+{
+    $query = $ma_bdd->query('SELECT brand_name, product_name, price, weight, quantity FROM order_lines WHERE orders_id='. $id_order);
+    $response_viewOrder = $query->fetchALL(PDO::FETCH_ASSOC);
+    return $response_viewOrder;
 }
 
 //Fonction ajout de produit avec en paramètres id_product & quantity
