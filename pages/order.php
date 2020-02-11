@@ -7,12 +7,6 @@ include 'pages/header.php';
 $total_product = 0;
 $sum_taxe_price = 0;
 $total_products = 0;
-//Transformer le panier en commande --> $_SESSION['cart'] => $_SESSION['order']
-//Avec un fonction order ?
-//Ajouter un numéro de commande
-//Fonction pour vérifier les stocks et les décrémenter !
-//
-//
 $id_order = $_GET['id'];
 ?>
 <div class="container mx-auto mt-3">
@@ -24,7 +18,8 @@ $id_order = $_GET['id'];
         <tr>
             <th scope="col">Produit</th>
             <th scope="col">Quantité</th>
-            <th scope="col">Prix Unitaire (TTC)</th>
+            <th scope="col">Prix Unit. (HT)</th>
+            <th scope="col">TVA unit.</th>
             <th scope="col">Total (TTC)</th>
         </tr>
         </thead>
@@ -39,8 +34,11 @@ $id_order = $_GET['id'];
                     <?= number_format($order_line['price'], 2, ',', '') ?> €
                 </td>
                 <td>
+                    <?= number_format(($order_line['taxe']*$order_line['price']/100), 1, ',', '') ?> €
+                </td>
+                <td>
                     Total :
-                    <?php $total_product = ($order_line['price'] * $order_line['quantity']) ?>
+                    <?php $total_product = (($order_line['price'] + ($order_line['taxe']*$order_line['price']/100)) * $order_line['quantity']) ?>
                     <?= number_format($total_product, 2, ',', ' ') ?> €
                 </td>
             </tr>
@@ -54,10 +52,7 @@ $id_order = $_GET['id'];
             : <?= $total_products . ' articles pour un total de ' . number_format($sum_taxe_price, 2, ',', ' ') ?>
             €
             TTC</h5></strong>
-
-
     <hr>
-    <h3>Votre commande a été validée. Merci de procéder au payement.</h3>
+    <h5>Votre commande a été validée. Merci de procéder au payement.</h5>
     <button class="btn btn-success" type="submit" name="add_cart">Payement</button>
-
 </div>

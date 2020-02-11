@@ -137,7 +137,7 @@ function createOrder(PDO $ma_bdd)
 //fonction reprise des infos de commande pour chaque produit pour la créatio nde ligne de commandes
 function viewProductOrder(PDO $ma_bdd, int $id_product): array
 {
-    $query = $ma_bdd->query('SELECT id, brand, name, description, price, weight FROM products WHERE id =' . $id_product);
+    $query = $ma_bdd->query('SELECT id, brand, name, description, price, taxe, weight FROM products WHERE id =' . $id_product);
     $response_viewProduct = $query->fetch(PDO::FETCH_ASSOC);
     return $response_viewProduct;
 }
@@ -175,7 +175,7 @@ function updateStock(PDO $ma_bdd, $id_product, $quantity)
 
 function viewOrder(PDO $ma_bdd, $id_order)
 {
-    $query = $ma_bdd->query('SELECT brand_name, product_name, price, weight, quantity FROM order_lines WHERE orders_id='. $id_order);
+    $query = $ma_bdd->query('SELECT brand_name, product_name, price, taxe, weight, quantity FROM order_lines WHERE orders_id='. $id_order);
     $response_viewOrder = $query->fetchALL(PDO::FETCH_ASSOC);
     return $response_viewOrder;
 }
