@@ -42,6 +42,8 @@
             aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    <?php $user = getUserId($bdd, $_SESSION['user']['id']); ?>
+    <p class="text-white">Bienvenu administrateur <?=$user['lastname']." ". $user['firstname']?></p>
     <a class="btn btn-success" href="index.php?page=login" role="button">Sign in</a>
     <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
         <ul class="navbar-nav">

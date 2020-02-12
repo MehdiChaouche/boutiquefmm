@@ -210,8 +210,15 @@ function getStocks(PDO $ma_bdd, $id_product)
 //Fonction pour aller chercher les infos utilisateurs dans la table "customers"
 function getUser(PDO $ma_bdd)
 {
-    $query = $ma_bdd->query('SELECT mail, password, admin FROM customers');
+    $query = $ma_bdd->query('SELECT id, firstname, lastname, mail, password, admin FROM customers');
     return $query;
+}
+
+//Fonction pour créer un user dans variable $_Session
+function createUser()
+{
+    $_SESSION['user'] = array();
+    return $_SESSION;
 }
 
 //Fonction signIn pour se connecter en vérifiant les informations utilisateurs $mail === email et $password === password
@@ -220,12 +227,24 @@ function signIn(PDO $ma_bdd, $signin_email, $signin_password)
     $usersid = getUser($ma_bdd); //récupération des informations utilisateurs
     foreach ($usersid as $userid) {
         if ($userid['mail'] === $signin_email && $userid['password'] === $signin_password) {
-            if (!isset($_SESSION['user'])) {
+            createUser();
+            if (isset($_SESSION['user'])) {
+                $_SESSION['user']['id'] = $userid['id'];
                 $_SESSION['user']['email'] = $userid['mail'];
                 $_SESSION['user']['admin'] = $userid['admin'];
-            } else {
-                echo "Vous n'êtes pas un utilisateur enregistré";
             }
+            header('Location: index.php?page=home', true, 302);
+            exit;
+        } else {
+            echo "Vous n'êtes pas un utilisateur enregistré";
         }
     }
+}
+
+//Fonction pour aller chercher les infos utilisateurs dans la table "customers"
+function getUserId(PDO $ma_bdd, $user_id)
+{
+    $query = $ma_bdd->query('SELECT id, firstname, lastname, mail, password, admin FROM customers WHERE customers.id='.$user_id);
+    $response = $query->fetch(PDO::FETCH_ASSOC);
+    return $response;
 }

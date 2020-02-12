@@ -5,18 +5,12 @@ if (!isset($_SESSION)) {
 include 'config.php';
 include 'functions.php';
 include 'header.php';
-//$email = $_POST['signin_email'];
-//$password = $_POST['signin_password'];
-//debug($email);
-//debug($password);
 
 if (isset($_POST['sign_in'])) {
     signIn($bdd, $_POST['signin_email'], $_POST['signin-password']);
 }else{
     echo "Merci de vous connecter";
 }
-
-
 ?>
 <div class="container text-center mx-auto col-md-2 mt-3">
     <form class="form-signin" method="post">
